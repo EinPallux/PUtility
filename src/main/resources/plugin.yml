@@ -3,7 +3,7 @@ version: '${project.version}'
 main: com.pallux.putility.PUtility
 api-version: '1.21'
 authors: [ Pallux ]
-description: A utility plugin with toggleable features.
+description: Vaaaaarious utilities I use for Setups
 depend: [ Vault ]
 softdepend: [ PlaceholderAPI, PlayerPoints ]
 
@@ -12,10 +12,6 @@ commands:
     description: Opens the shop GUI.
     usage: /shop
     permission: pu.shop
-  hide:
-    description: Toggle name scrambling.
-    usage: /hide
-    permission: pu.hide
   putility:
     description: Main admin command.
     usage: /putility <reload>
@@ -26,9 +22,6 @@ permissions:
   pu.shop:
     description: Allows opening the shop.
     default: true
-  pu.hide:
-    description: Allows using /hide.
-    default: false
   pu.admin:
     description: Admin access to PUtility.
     default: op

@@ -1,13 +1,12 @@
 package com.pallux.putility;
 
-import com.pallux.putility.commands.HideCommand;
 import com.pallux.putility.commands.PUtilityCommand;
 import com.pallux.putility.commands.ShopCommand;
 import com.pallux.putility.config.ConfigManager;
 import com.pallux.putility.economy.EconomyHandler;
 import com.pallux.putility.economy.PlayerPointsHandler;
-import com.pallux.putility.features.hide.HideFeature;
 import com.pallux.putility.features.simpleshop.ShopFeature;
+import com.pallux.putility.gui.GuiListener;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -21,23 +20,19 @@ public final class PUtility extends JavaPlugin {
     private EconomyHandler economyHandler;
     private PlayerPointsHandler playerPointsHandler;
     private ShopFeature shopFeature;
-    private HideFeature hideFeature;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        // Load configs
         configManager = new ConfigManager(this);
         configManager.loadAll();
 
-        // Setup economy (Vault)
         economyHandler = new EconomyHandler(this);
         if (!economyHandler.setup()) {
             getLogger().warning("Vault economy not found! Vault-priced shop items will not work.");
         }
 
-        // Setup PlayerPoints (soft depend)
         playerPointsHandler = new PlayerPointsHandler();
         if (playerPointsHandler.setup()) {
             getLogger().info("PlayerPoints found and hooked successfully.");
@@ -45,13 +40,9 @@ public final class PUtility extends JavaPlugin {
             getLogger().info("PlayerPoints not found. PlayerPoints-priced shop items will not work.");
         }
 
-        // Register global GUI listener
-        getServer().getPluginManager().registerEvents(new com.pallux.putility.gui.GuiListener(), this);
+        getServer().getPluginManager().registerEvents(new GuiListener(), this);
 
-        // Init features
         initFeatures();
-
-        // Register commands
         registerCommands();
 
         getLogger().info("PUtility enabled successfully.");
@@ -60,24 +51,18 @@ public final class PUtility extends JavaPlugin {
     @Override
     public void onDisable() {
         if (shopFeature != null) shopFeature.disable();
-        if (hideFeature != null) hideFeature.disable();
         getLogger().info("PUtility disabled.");
     }
 
     private void initFeatures() {
-        boolean shopEnabled = getConfig().getBoolean("features.simpleshop", true);
-        boolean hideEnabled = getConfig().getBoolean("features.hide", true);
-
         shopFeature = new ShopFeature(this);
-        hideFeature = new HideFeature(this);
-
-        if (shopEnabled) shopFeature.enable();
-        if (hideEnabled) hideFeature.enable();
+        if (getConfig().getBoolean("features.simpleshop", true)) {
+            shopFeature.enable();
+        }
     }
 
     private void registerCommands() {
         registerCmd("shop", new ShopCommand(this));
-        registerCmd("hide", new HideCommand(this));
         registerCmd("putility", new PUtilityCommand(this));
     }
 
@@ -96,14 +81,11 @@ public final class PUtility extends JavaPlugin {
     public void reload() {
         configManager.loadAll();
         if (shopFeature != null) shopFeature.reload();
-        if (hideFeature != null) hideFeature.reload();
     }
 
-    // --- Getters ---
     public static PUtility getInstance() { return instance; }
     public ConfigManager getConfigManager() { return configManager; }
     public EconomyHandler getEconomyHandler() { return economyHandler; }
     public PlayerPointsHandler getPlayerPointsHandler() { return playerPointsHandler; }
     public ShopFeature getShopFeature() { return shopFeature; }
-    public HideFeature getHideFeature() { return hideFeature; }
 }

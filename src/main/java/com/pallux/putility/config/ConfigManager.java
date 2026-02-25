@@ -20,7 +20,7 @@ public class ConfigManager {
     private final Map<String, File> configFiles = new HashMap<>();
 
     private static final String[] CONFIG_NAMES = {
-            "config", "messages", "simpleshop", "hide"
+            "config", "messages", "simpleshop"
     };
 
     public ConfigManager(PUtility plugin) {
@@ -43,7 +43,6 @@ public class ConfigManager {
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-        // Merge defaults from jar
         InputStream defStream = plugin.getResource(fileName);
         if (defStream != null) {
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(

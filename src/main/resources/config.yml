@@ -1,6 +1,14 @@
-# PUtility - Main Configuration
-# Feature toggles - enable or disable individual features here.
+#   ___  __  ____  _ ___ __
+#  / _ \/ / / / /_(_) (_) /___ __
+# / ___/ /_/ / __/ / / / __/ // /
+#/_/   \____/\__/_/_/_/\__/\_, /
+#  _________  _  _________/___/_
+# / ___/ __ \/ |/ / __/  _/ ___/
+#/ /__/ /_/ /    / _/_/ // (_ /
+#\___/\____/_/|_/_/ /___/\___/
+# Made by Pallux @ BBB - For Support, visit my Discord:
+# https://discord.com/invite/FwRtcAdsTC ^-^
 
+# Here you can toggle individual Features On and Off.
 features:
   simpleshop: true
-  hide: true
