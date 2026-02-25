@@ -1,0 +1,6 @@
+# PUtility - Unknown Command Feature Configuration
+# Supports: Legacy color codes (&a, &b, etc.), HEX (#RRGGBB or &#RRGGBB), PlaceholderAPI
+# Placeholders: {command} = the command that was attempted
+
+messages:
+  unknown-command: "&cUnknown command &7'&f/{command}&7'&c. Try &e/help &cfor a list of commands."

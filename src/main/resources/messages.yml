@@ -1,0 +1,10 @@
+# PUtility - General Messages
+# Supports: Legacy color codes (&a, &b, etc.), HEX (#RRGGBB or &#RRGGBB), PlaceholderAPI
+
+messages:
+  prefix: "&7&lUTILITY &7➠ "
+  no-permission: "&cYou do not have permission to use this command."
+  player-only: "&cThis command can only be used by players."
+  reload-success: "&aConfiguration reloaded successfully."
+  feature-disabled: "&cThis feature is currently disabled."
+  unknown-command: "&cUnknown command. Type &e/help &cfor a list of commands."
