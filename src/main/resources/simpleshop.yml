@@ -37,7 +37,7 @@ gui:
       material: BLACK_STAINED_GLASS_PANE
       name: " "
     back-button:
-      slot: 18
+      slot: 22
       material: ARROW
       name: "&cBack"
       lore:
@@ -55,7 +55,7 @@ gui:
       lore:
         - "&7Click to go back."
     buy-1:
-      slot: 2
+      slot: 3
       name: "&aBuy &f1x &7{item_name}"
       lore:
         - ""
@@ -63,7 +63,7 @@ gui:
         - ""
         - "&eClick to purchase!"
     buy-16:
-      slot: 3
+      slot: 4
       name: "&aBuy &f16x &7{item_name}"
       lore:
         - ""
@@ -71,7 +71,7 @@ gui:
         - ""
         - "&eClick to purchase!"
     buy-32:
-      slot: 4
+      slot: 5
       name: "&aBuy &f32x &7{item_name}"
       lore:
         - ""
@@ -79,7 +79,7 @@ gui:
         - ""
         - "&eClick to purchase!"
     buy-64:
-      slot: 5
+      slot: 6
       name: "&aBuy &f64x &7{item_name}"
       lore:
         - ""
@@ -103,14 +103,13 @@ categories:
     name: "&#cfcc8f&lᴇɴᴅ"
     lore:
       - "&7Click to Browse Items"
-    icon: ENDSTONE
+    icon: END_STONE
     slot: 10
     items:
       0:
         material: DIAMOND_SWORD
         name: "&bDiamond Sword"
-        lore:
-          - "&7A powerful sword."
+        lore: []
         price: 500.0
         currency: VAULT
         commands: []
@@ -118,15 +117,14 @@ categories:
       1:
         material: BOW
         name: "&aBow"
-        lore:
-          - "&7A trusty bow."
+        lore: []
         price: 150.0
         currency: VAULT
         commands: []
         slot: 1
 
   shard_shop:
-    name: "&5ꜱʜᴀʀᴅ ꜱʜᴏᴘ"
+    name: "&5&lꜱʜᴀʀᴅ ꜱʜᴏᴘ"
     lore:
       - "&7Click to Browse Items"
     icon: AMETHYST_SHARD

@@ -20,10 +20,7 @@ public class ShopCategoryGui extends AbstractGui {
     private final ShopData shopData;
     private final ShopCategory category;
 
-    private static final int[] ITEM_SLOTS = {
-            0,1,2,3,4,5,6,7,8,
-            9,10,11,12,13,14,15,16,17
-    };
+    private static final int[] ITEM_SLOTS = {10, 11, 12, 13, 14, 15, 16};
 
     public ShopCategoryGui(PUtility plugin, Player player, ShopData shopData, ShopCategory category) {
         super(27, MessageUtils.parse(
@@ -45,7 +42,7 @@ public class ShopCategoryGui extends AbstractGui {
         ItemStack fillerItem = ItemBuilder.build(filler, MessageUtils.parse(cfg.getString("gui.category.filler.name", " ")));
         for (int i = 0; i < 27; i++) inventory.setItem(i, fillerItem);
 
-        int backSlot = cfg.getInt("gui.category.back-button.slot", 18);
+        int backSlot = cfg.getInt("gui.category.back-button.slot", 22);
         inventory.setItem(backSlot, ItemBuilder.buildFromConfig(
                 cfg.getString("gui.category.back-button.material", "ARROW"),
                 cfg.getString("gui.category.back-button.name", "&cBack"),
@@ -56,9 +53,14 @@ public class ShopCategoryGui extends AbstractGui {
         int slotIdx = 0;
         for (ShopItem item : category.getItems().values()) {
             if (slotIdx >= ITEM_SLOTS.length) break;
-            int targetSlot = slotIdx;
-            while (targetSlot < ITEM_SLOTS.length && ITEM_SLOTS[targetSlot] == backSlot) targetSlot++;
-            if (targetSlot >= ITEM_SLOTS.length) break;
+            int targetSlot = ITEM_SLOTS[slotIdx];
+
+            // Skip the back button slot if it overlaps
+            while (slotIdx < ITEM_SLOTS.length && ITEM_SLOTS[slotIdx] == backSlot) {
+                slotIdx++;
+            }
+            if (slotIdx >= ITEM_SLOTS.length) break;
+            targetSlot = ITEM_SLOTS[slotIdx];
 
             ItemStack display = ItemBuilder.buildFromConfig(
                     item.getMaterial().name(),
@@ -67,8 +69,8 @@ public class ShopCategoryGui extends AbstractGui {
                     player,
                     Map.of()
             );
-            inventory.setItem(ITEM_SLOTS[targetSlot], display);
-            slotIdx = targetSlot + 1;
+            inventory.setItem(targetSlot, display);
+            slotIdx++;
         }
     }
 
@@ -77,7 +79,7 @@ public class ShopCategoryGui extends AbstractGui {
         if (!(event.getWhoClicked() instanceof Player clicker)) return;
         FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
 
-        int backSlot = cfg.getInt("gui.category.back-button.slot", 18);
+        int backSlot = cfg.getInt("gui.category.back-button.slot", 22);
         int clickedSlot = event.getSlot();
 
         if (clickedSlot == backSlot) {
@@ -89,12 +91,19 @@ public class ShopCategoryGui extends AbstractGui {
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null || clicked.getType() == Material.AIR || clicked.getType() == filler) return;
 
-        int itemIndex = 0;
+        // Find which index in ITEM_SLOTS was clicked
+        int itemIndex = -1;
+        int validIdx = 0;
         for (int i = 0; i < ITEM_SLOTS.length; i++) {
             if (ITEM_SLOTS[i] == backSlot) continue;
-            if (ITEM_SLOTS[i] == clickedSlot) break;
-            itemIndex++;
+            if (ITEM_SLOTS[i] == clickedSlot) {
+                itemIndex = validIdx;
+                break;
+            }
+            validIdx++;
         }
+
+        if (itemIndex < 0) return;
 
         ShopItem[] items = category.getItems().values().toArray(new ShopItem[0]);
         if (itemIndex >= items.length) return;

@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +20,9 @@ public class ShopMainGui extends AbstractGui {
     private final PUtility plugin;
     private final Player player;
     private final ShopData shopData;
+
+    // Maps inventory slot → ShopCategory for click handling
+    private final Map<Integer, ShopCategory> slotToCategoryMap = new HashMap<>();
 
     public ShopMainGui(PUtility plugin, Player player, ShopData shopData) {
         super(27, MessageUtils.parse(plugin.getConfigManager().get("simpleshop").getString("gui.main.title", "&8Shop"), player));
@@ -28,6 +33,8 @@ public class ShopMainGui extends AbstractGui {
 
     @Override
     protected void build() {
+        slotToCategoryMap.clear();
+
         FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
 
         String fillerMat = cfg.getString("gui.main.filler.material", "BLACK_STAINED_GLASS_PANE");
@@ -39,7 +46,7 @@ public class ShopMainGui extends AbstractGui {
             inventory.setItem(i, fillerItem);
         }
 
-        List<Integer> categorySlots = cfg.getIntegerList("gui.main.category-slots");
+        List<Integer> categorySlots = new ArrayList<>(cfg.getIntegerList("gui.main.category-slots"));
         if (categorySlots.isEmpty()) {
             for (int i = 10; i <= 16; i++) categorySlots.add(i);
         }
@@ -57,6 +64,7 @@ public class ShopMainGui extends AbstractGui {
                     Map.of("category_name", category.getName())
             );
             inventory.setItem(slot, catItem);
+            slotToCategoryMap.put(slot, category);
         }
     }
 
@@ -70,19 +78,10 @@ public class ShopMainGui extends AbstractGui {
         String fillerMat = cfg.getString("gui.main.filler.material", "BLACK_STAINED_GLASS_PANE");
         if (clicked.getType() == parseMaterial(fillerMat)) return;
 
-        int clickedSlot = event.getSlot();
-        List<Integer> categorySlots = cfg.getIntegerList("gui.main.category-slots");
-        if (categorySlots.isEmpty()) {
-            for (int i = 10; i <= 16; i++) categorySlots.add(i);
-        }
+        ShopCategory category = slotToCategoryMap.get(event.getSlot());
+        if (category == null) return;
 
-        int slotIndex = categorySlots.indexOf(clickedSlot);
-        if (slotIndex < 0) return;
-
-        ShopCategory[] cats = shopData.getCategories().values().toArray(new ShopCategory[0]);
-        if (slotIndex >= cats.length) return;
-
-        new ShopCategoryGui(plugin, clicker, shopData, cats[slotIndex]).open(clicker);
+        new ShopCategoryGui(plugin, clicker, shopData, category).open(clicker);
     }
 
     private Material parseMaterial(String name) {
