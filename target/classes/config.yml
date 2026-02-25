@@ -1,7 +1,0 @@
-# PUtility - Main Configuration
-# Feature toggles - enable or disable individual features here.
-
-features:
-  simpleshop: true
-  hide: true
-  unknowncommand: true
