@@ -20,7 +20,7 @@ public class ConfigManager {
     private final Map<String, File> configFiles = new HashMap<>();
 
     private static final String[] CONFIG_NAMES = {
-            "config", "messages", "simpleshop", "hide", "unknowncommand"
+            "config", "messages", "simpleshop", "hide"
     };
 
     public ConfigManager(PUtility plugin) {

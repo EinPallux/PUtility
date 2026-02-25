@@ -42,12 +42,10 @@ public class ShopBuyGui extends AbstractGui {
     protected void build() {
         FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
 
-        // Filler
         Material filler = parseMaterial(cfg.getString("gui.buy.filler.material", "BLACK_STAINED_GLASS_PANE"));
         ItemStack fillerItem = ItemBuilder.build(filler, MessageUtils.parse(" "));
         for (int i = 0; i < 9; i++) inventory.setItem(i, fillerItem);
 
-        // Back button
         int backSlot = cfg.getInt("gui.buy.back-button.slot", 0);
         inventory.setItem(backSlot, ItemBuilder.buildFromConfig(
                 cfg.getString("gui.buy.back-button.material", "ARROW"),
@@ -57,8 +55,6 @@ public class ShopBuyGui extends AbstractGui {
         ));
 
         String currencySymbol = getCurrencySymbol();
-
-        // Buy buttons
         String[] buyKeys = {"buy-1", "buy-16", "buy-32", "buy-64"};
         int[] defaultSlots = {2, 3, 4, 5};
 
@@ -67,7 +63,6 @@ public class ShopBuyGui extends AbstractGui {
             double totalPrice = shopItem.getPriceFor(amount);
             String key = "gui.buy." + buyKeys[i];
             int slot = cfg.getInt(key + ".slot", defaultSlots[i]);
-
             String priceStr = formatPrice(totalPrice);
 
             String name = cfg.getString(key + ".name", "&aBuy &f" + amount + "x &7{item_name}")
@@ -121,7 +116,6 @@ public class ShopBuyGui extends AbstractGui {
         double totalPrice = shopItem.getPriceFor(amount);
         String priceStr = formatPrice(totalPrice);
 
-        // --- Currency check & deduction ---
         if (shopItem.getCurrencyType() == ShopItem.CurrencyType.PLAYER_POINTS) {
             PlayerPointsHandler pp = plugin.getPlayerPointsHandler();
             if (!pp.isAvailable()) {
@@ -136,7 +130,6 @@ public class ShopBuyGui extends AbstractGui {
                 buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
                 return;
             }
-            // Check inventory (skip for command-only items)
             if (!shopItem.hasCommands() || shopItem.getMaterial() != Material.AIR) {
                 ItemStack toGive = new ItemStack(shopItem.getMaterial(), amount);
                 if (!hasSpace(buyer, toGive)) {
@@ -148,7 +141,6 @@ public class ShopBuyGui extends AbstractGui {
             }
             pp.withdraw(buyer, pointsCost);
         } else {
-            // Vault
             EconomyHandler eco = plugin.getEconomyHandler();
             if (!eco.isAvailable()) {
                 buyer.sendMessage(MessageUtils.parse(prefix + "&cEconomy is not available.", buyer));
@@ -156,7 +148,7 @@ public class ShopBuyGui extends AbstractGui {
             }
             if (!eco.has(buyer, totalPrice)) {
                 String msg = cfg.getString("messages.purchase-failed-funds",
-                        "&cYou don't have enough money! You need &f${price}&c.")
+                        "&cYou don't have enough money! You need &f{price}&c.")
                         .replace("{price}", priceStr);
                 buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
                 return;
@@ -173,7 +165,6 @@ public class ShopBuyGui extends AbstractGui {
             eco.withdraw(buyer, totalPrice);
         }
 
-        // --- Execute console commands ---
         if (shopItem.hasCommands()) {
             for (String cmd : shopItem.getCommands()) {
                 String parsed = cmd
@@ -183,7 +174,6 @@ public class ShopBuyGui extends AbstractGui {
             }
         }
 
-        // --- Success message ---
         String msg = cfg.getString("messages.purchase-success",
                 "&aYou purchased &f{amount}x {item} &afor &f{price}&a!")
                 .replace("{amount}", String.valueOf(amount))

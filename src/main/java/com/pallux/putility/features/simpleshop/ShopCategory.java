@@ -37,7 +37,6 @@ public class ShopCategory {
     public Map<Integer, ShopItem> getItems() { return items; }
 
     public void addItem(ShopItem item) {
-        // Find the next available slot
         int nextSlot = 0;
         while (items.containsKey(nextSlot)) nextSlot++;
         item.setSlot(nextSlot);

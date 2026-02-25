@@ -8,7 +8,6 @@ import com.pallux.putility.economy.EconomyHandler;
 import com.pallux.putility.economy.PlayerPointsHandler;
 import com.pallux.putility.features.hide.HideFeature;
 import com.pallux.putility.features.simpleshop.ShopFeature;
-import com.pallux.putility.features.unknowncommand.UnknownCommandFeature;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -23,7 +22,6 @@ public final class PUtility extends JavaPlugin {
     private PlayerPointsHandler playerPointsHandler;
     private ShopFeature shopFeature;
     private HideFeature hideFeature;
-    private UnknownCommandFeature unknownCommandFeature;
 
     @Override
     public void onEnable() {
@@ -63,22 +61,18 @@ public final class PUtility extends JavaPlugin {
     public void onDisable() {
         if (shopFeature != null) shopFeature.disable();
         if (hideFeature != null) hideFeature.disable();
-        if (unknownCommandFeature != null) unknownCommandFeature.disable();
         getLogger().info("PUtility disabled.");
     }
 
     private void initFeatures() {
         boolean shopEnabled = getConfig().getBoolean("features.simpleshop", true);
         boolean hideEnabled = getConfig().getBoolean("features.hide", true);
-        boolean unknownCmdEnabled = getConfig().getBoolean("features.unknowncommand", true);
 
         shopFeature = new ShopFeature(this);
         hideFeature = new HideFeature(this);
-        unknownCommandFeature = new UnknownCommandFeature(this);
 
         if (shopEnabled) shopFeature.enable();
         if (hideEnabled) hideFeature.enable();
-        if (unknownCmdEnabled) unknownCommandFeature.enable();
     }
 
     private void registerCommands() {
@@ -103,7 +97,6 @@ public final class PUtility extends JavaPlugin {
         configManager.loadAll();
         if (shopFeature != null) shopFeature.reload();
         if (hideFeature != null) hideFeature.reload();
-        if (unknownCommandFeature != null) unknownCommandFeature.reload();
     }
 
     // --- Getters ---
@@ -113,5 +106,4 @@ public final class PUtility extends JavaPlugin {
     public PlayerPointsHandler getPlayerPointsHandler() { return playerPointsHandler; }
     public ShopFeature getShopFeature() { return shopFeature; }
     public HideFeature getHideFeature() { return hideFeature; }
-    public UnknownCommandFeature getUnknownCommandFeature() { return unknownCommandFeature; }
 }

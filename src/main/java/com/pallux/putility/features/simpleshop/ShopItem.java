@@ -18,7 +18,6 @@ public class ShopItem {
     private double price;
     private CurrencyType currencyType;
     private int slot;
-    // Commands executed by console on purchase. Use %player% as placeholder.
     private List<String> commands;
 
     public ShopItem(Material material, String name, List<String> lore,

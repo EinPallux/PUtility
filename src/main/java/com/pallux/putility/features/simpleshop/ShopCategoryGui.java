@@ -4,7 +4,6 @@ import com.pallux.putility.PUtility;
 import com.pallux.putility.gui.AbstractGui;
 import com.pallux.putility.utils.ItemBuilder;
 import com.pallux.putility.utils.MessageUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -21,7 +20,6 @@ public class ShopCategoryGui extends AbstractGui {
     private final ShopData shopData;
     private final ShopCategory category;
 
-    // Item slots: 0-8, 9-17, 18-26 minus back button
     private static final int[] ITEM_SLOTS = {
             0,1,2,3,4,5,6,7,8,
             9,10,11,12,13,14,15,16,17
@@ -43,23 +41,21 @@ public class ShopCategoryGui extends AbstractGui {
     protected void build() {
         FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
 
-        // Filler
         Material filler = parseMaterial(cfg.getString("gui.category.filler.material", "BLACK_STAINED_GLASS_PANE"));
         ItemStack fillerItem = ItemBuilder.build(filler, MessageUtils.parse(cfg.getString("gui.category.filler.name", " ")));
         for (int i = 0; i < 27; i++) inventory.setItem(i, fillerItem);
 
-        // Back button
         int backSlot = cfg.getInt("gui.category.back-button.slot", 18);
-        String backMat = cfg.getString("gui.category.back-button.material", "ARROW");
-        String backName = cfg.getString("gui.category.back-button.name", "&cBack");
-        List<String> backLore = cfg.getStringList("gui.category.back-button.lore");
-        inventory.setItem(backSlot, ItemBuilder.buildFromConfig(backMat, backName, backLore, player, Map.of()));
+        inventory.setItem(backSlot, ItemBuilder.buildFromConfig(
+                cfg.getString("gui.category.back-button.material", "ARROW"),
+                cfg.getString("gui.category.back-button.name", "&cBack"),
+                cfg.getStringList("gui.category.back-button.lore"),
+                player, Map.of()
+        ));
 
-        // Items
         int slotIdx = 0;
         for (ShopItem item : category.getItems().values()) {
             if (slotIdx >= ITEM_SLOTS.length) break;
-            // Skip back button slot
             int targetSlot = slotIdx;
             while (targetSlot < ITEM_SLOTS.length && ITEM_SLOTS[targetSlot] == backSlot) targetSlot++;
             if (targetSlot >= ITEM_SLOTS.length) break;
@@ -89,18 +85,14 @@ public class ShopCategoryGui extends AbstractGui {
             return;
         }
 
-        // Find which item is in this slot
         Material filler = parseMaterial(cfg.getString("gui.category.filler.material", "BLACK_STAINED_GLASS_PANE"));
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null || clicked.getType() == Material.AIR || clicked.getType() == filler) return;
 
-        // Map slot → item
         int itemIndex = 0;
         for (int i = 0; i < ITEM_SLOTS.length; i++) {
             if (ITEM_SLOTS[i] == backSlot) continue;
-            if (ITEM_SLOTS[i] == clickedSlot) {
-                break;
-            }
+            if (ITEM_SLOTS[i] == clickedSlot) break;
             itemIndex++;
         }
 

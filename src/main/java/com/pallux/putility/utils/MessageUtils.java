@@ -2,7 +2,6 @@ package com.pallux.putility.utils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -81,7 +80,6 @@ public final class MessageUtils {
 
     /** Strip formatting for display name comparisons */
     public static String stripColor(String text) {
-        return LegacyComponentSerializer.legacyAmpersand().deserialize(text)
-                .toString();
+        return LegacyComponentSerializer.legacyAmpersand().deserialize(text).toString();
     }
 }

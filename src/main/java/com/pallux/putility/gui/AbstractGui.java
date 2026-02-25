@@ -7,8 +7,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 
-import java.util.function.Consumer;
-
 public abstract class AbstractGui implements InventoryHolder {
 
     protected final Inventory inventory;

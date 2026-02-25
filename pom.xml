@@ -95,6 +95,7 @@
             <version>2.11.6</version>
             <scope>provided</scope>
         </dependency>
+
         <!-- PlayerPoints -->
         <dependency>
             <groupId>org.black_ixx</groupId>

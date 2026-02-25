@@ -85,11 +85,9 @@ messages:
 
 # ============================================================
 #  SHOP CATEGORIES & ITEMS
-#  Configure your entire shop here.
 # ============================================================
 categories:
 
-  # --- Example: Regular item shop (Vault / money) ---
   weapons:
     name: "&cWeapons"
     lore:
@@ -116,7 +114,6 @@ categories:
         commands: []
         slot: 1
 
-  # --- Example: Shard Shop (PlayerPoints + console commands) ---
   shard_shop:
     name: "&eShard Shop"
     lore:
@@ -124,7 +121,6 @@ categories:
     icon: NETHER_STAR
     slot: 11
     items:
-      # Command-only item: gives a crate key via console command, no physical item
       0:
         material: TRIPWIRE_HOOK
         name: "&6Common Crate Key"
@@ -137,7 +133,6 @@ categories:
         commands:
           - "crates give %player% common 1"
         slot: 0
-      # Item + command: gives the spawner item AND runs a command
       1:
         material: SPAWNER
         name: "&5Skeleton Spawner"

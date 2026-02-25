@@ -4,7 +4,6 @@ import com.pallux.putility.PUtility;
 import com.pallux.putility.gui.AbstractGui;
 import com.pallux.putility.utils.ItemBuilder;
 import com.pallux.putility.utils.MessageUtils;
-import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -31,7 +30,6 @@ public class ShopMainGui extends AbstractGui {
     protected void build() {
         FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
 
-        // Fill with glass panes
         String fillerMat = cfg.getString("gui.main.filler.material", "BLACK_STAINED_GLASS_PANE");
         String fillerName = cfg.getString("gui.main.filler.name", " ");
         Material filler = parseMaterial(fillerMat);
@@ -41,7 +39,6 @@ public class ShopMainGui extends AbstractGui {
             inventory.setItem(i, fillerItem);
         }
 
-        // Place categories
         List<Integer> categorySlots = cfg.getIntegerList("gui.main.category-slots");
         if (categorySlots.isEmpty()) {
             for (int i = 10; i <= 16; i++) categorySlots.add(i);
@@ -73,7 +70,6 @@ public class ShopMainGui extends AbstractGui {
         String fillerMat = cfg.getString("gui.main.filler.material", "BLACK_STAINED_GLASS_PANE");
         if (clicked.getType() == parseMaterial(fillerMat)) return;
 
-        // Find which category was clicked
         int clickedSlot = event.getSlot();
         List<Integer> categorySlots = cfg.getIntegerList("gui.main.category-slots");
         if (categorySlots.isEmpty()) {
@@ -86,8 +82,7 @@ public class ShopMainGui extends AbstractGui {
         ShopCategory[] cats = shopData.getCategories().values().toArray(new ShopCategory[0]);
         if (slotIndex >= cats.length) return;
 
-        ShopCategory category = cats[slotIndex];
-        new ShopCategoryGui(plugin, clicker, shopData, category).open(clicker);
+        new ShopCategoryGui(plugin, clicker, shopData, cats[slotIndex]).open(clicker);
     }
 
     private Material parseMaterial(String name) {
