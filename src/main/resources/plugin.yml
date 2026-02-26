@@ -25,3 +25,6 @@ permissions:
   pu.admin:
     description: Admin access to PUtility.
     default: op
+  pu.shards:
+    description: Grants periodic shard rewards via PremiumShards feature.
+    default: false

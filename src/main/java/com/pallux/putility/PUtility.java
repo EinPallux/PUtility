@@ -5,6 +5,7 @@ import com.pallux.putility.commands.ShopCommand;
 import com.pallux.putility.config.ConfigManager;
 import com.pallux.putility.economy.EconomyHandler;
 import com.pallux.putility.economy.PlayerPointsHandler;
+import com.pallux.putility.features.premiumshards.PremiumShardsFeature;
 import com.pallux.putility.features.simpleshop.ShopFeature;
 import com.pallux.putility.gui.GuiListener;
 import org.bukkit.command.PluginCommand;
@@ -20,6 +21,7 @@ public final class PUtility extends JavaPlugin {
     private EconomyHandler economyHandler;
     private PlayerPointsHandler playerPointsHandler;
     private ShopFeature shopFeature;
+    private PremiumShardsFeature premiumShardsFeature;
 
     @Override
     public void onEnable() {
@@ -51,6 +53,7 @@ public final class PUtility extends JavaPlugin {
     @Override
     public void onDisable() {
         if (shopFeature != null) shopFeature.disable();
+        if (premiumShardsFeature != null) premiumShardsFeature.disable();
         getLogger().info("PUtility disabled.");
     }
 
@@ -58,6 +61,11 @@ public final class PUtility extends JavaPlugin {
         shopFeature = new ShopFeature(this);
         if (getConfig().getBoolean("features.simpleshop", true)) {
             shopFeature.enable();
+        }
+
+        premiumShardsFeature = new PremiumShardsFeature(this);
+        if (getConfig().getBoolean("features.premiumshards", true)) {
+            premiumShardsFeature.enable();
         }
     }
 
@@ -81,6 +89,7 @@ public final class PUtility extends JavaPlugin {
     public void reload() {
         configManager.loadAll();
         if (shopFeature != null) shopFeature.reload();
+        if (premiumShardsFeature != null) premiumShardsFeature.reload();
     }
 
     public static PUtility getInstance() { return instance; }
@@ -88,4 +97,5 @@ public final class PUtility extends JavaPlugin {
     public EconomyHandler getEconomyHandler() { return economyHandler; }
     public PlayerPointsHandler getPlayerPointsHandler() { return playerPointsHandler; }
     public ShopFeature getShopFeature() { return shopFeature; }
+    public PremiumShardsFeature getPremiumShardsFeature() { return premiumShardsFeature; }
 }

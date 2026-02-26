@@ -9,7 +9,11 @@
 # Made by Pallux @ BBB - For Support, visit my Discord:
 # https://discord.com/invite/FwRtcAdsTC ^-^
 
-# Here you can toggle individual Features On and Off.
-features:
-  simpleshop: true
-  premiumshards: true
+# How often (in seconds) the command is executed for eligible players.
+interval-seconds: 60
+
+# The permission a player must have to receive the reward.
+permission: pu.shards
+
+# The console command to run. Use %player% as a placeholder for the player's name.
+command: "shards give %player% 1"
