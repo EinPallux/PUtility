@@ -38,7 +38,7 @@ gui:
       name: " "
     back-button:
       slot: 22
-      material: ARROW
+      material: RED_STAINED_GLASS_PANE
       name: "&c&lʙᴀᴄᴋ"
       lore:
         - "&7Click to return to the main shop."
@@ -50,7 +50,7 @@ gui:
       name: " "
     back-button:
       slot: 0
-      material: ARROW
+      material: RED_STAINED_GLASS_PANE
       name: "&c&lʙᴀᴄᴋ"
       lore:
         - "&7Click to go back."
@@ -100,21 +100,61 @@ categories:
     slot: 11
     items:
       0:
-        material: DIAMOND_SWORD
-        name: "&bDiamond Sword"
+        material: ENDER_CHEST
+        name: "&7Ender Chest"
         lore: []
-        price: 500.0
+        price: 75000.0
         currency: VAULT
         commands: []
         slot: 0
       1:
-        material: BOW
-        name: "&aBow"
+        material: ENDER_PEARL
+        name: "&7Ender Pearl"
+        lore: []
+        price: 1250.0
+        currency: VAULT
+        commands: []
+        slot: 1
+      2:
+        material: END_STONE
+        name: "&7End Stone"
+        lore: []
+        price: 50.0
+        currency: VAULT
+        commands: []
+        slot: 2
+      3:
+        material: END_ROD
+        name: "&7End Rod"
+        lore: []
+        price: 12500.0
+        currency: VAULT
+        commands: []
+        slot: 3
+      4:
+        material: CHORUS_FRUIT
+        name: "&7Chorus Fruit"
         lore: []
         price: 150.0
         currency: VAULT
         commands: []
-        slot: 1
+        slot: 4
+      5:
+        material: SHULKER_SHELL
+        name: "&7Shulker Shell"
+        lore: []
+        price: 7500.0
+        currency: VAULT
+        commands: []
+        slot: 5
+      6:
+        material: SHULKER_BOX
+        name: "&7Shulker Box"
+        lore: []
+        price: 17500.0
+        currency: VAULT
+        commands: []
+        slot: 6
 
   nether:
     name: "&c&lɴᴇᴛʜᴇʀ"
@@ -124,45 +164,125 @@ categories:
     slot: 12
     items:
       0:
-        material: DIAMOND_SWORD
-        name: "&bDiamond Sword"
+        material: BLAZE_ROD
+        name: "&7Blaze Rod"
         lore: []
-        price: 500.0
+        price: 5000.0
         currency: VAULT
         commands: []
         slot: 0
       1:
-        material: BOW
-        name: "&aBow"
+        material: NETHER_WART
+        name: "&7Nether Wart"
         lore: []
-        price: 150.0
+        price: 1250.0
         currency: VAULT
         commands: []
         slot: 1
+      2:
+        material: GLOWSTONE_DUST
+        name: "&7Glowstone Dust"
+        lore: []
+        price: 250.0
+        currency: VAULT
+        commands: []
+        slot: 2
+      3:
+        material: MAGMA_CREAM
+        name: "&7Magma Cream"
+        lore: []
+        price: 1250.0
+        currency: VAULT
+        commands: []
+        slot: 3
+      4:
+        material: GHAST_TEAR
+        name: "&7Ghast Tear"
+        lore: []
+        price: 4500.0
+        currency: VAULT
+        commands: []
+        slot: 4
+      5:
+        material: SOUL_SAND
+        name: "&7Soul Sand"
+        lore: []
+        price: 275.0
+        currency: VAULT
+        commands: []
+        slot: 5
+      6:
+        material: MAGMA_BLOCK
+        name: "&7Magma Block"
+        lore: []
+        price: 750.0
+        currency: VAULT
+        commands: []
+        slot: 6
 
-  utility:
-    name: "&f&lᴜᴛɪʟɪᴛʏ"
+  gear:
+    name: "&f&lɢᴇᴀʀ"
     lore:
       - "&7Click to Browse Items"
     icon: TOTEM_OF_UNDYING
     slot: 13
     items:
       0:
-        material: DIAMOND_SWORD
-        name: "&bDiamond Sword"
+        material: OBSIDIAN
+        name: "&7Obsidian"
         lore: []
-        price: 500.0
+        price: 2500.0
         currency: VAULT
         commands: []
         slot: 0
       1:
-        material: BOW
-        name: "&aBow"
+        material: END_CRYSTAL
+        name: "&7End Crystal"
         lore: []
-        price: 150.0
+        price: 12500.0
         currency: VAULT
         commands: []
         slot: 1
+      2:
+        material: RESPAWN_ANCHOR
+        name: "&7Respawn Anchor"
+        lore: []
+        price: 20000.0
+        currency: VAULT
+        commands: []
+        slot: 2
+      3:
+        material: GLOWSTONE
+        name: "&7Glowstone"
+        lore: []
+        price: 2500.0
+        currency: VAULT
+        commands: []
+        slot: 3
+      4:
+        material: TOTEM_OF_UNDYING
+        name: "&7Totem of Undying"
+        lore: []
+        price: 100000.0
+        currency: VAULT
+        commands: []
+        slot: 4
+      5:
+        material: ARROW
+        name: "&7Arrow"
+        lore: []
+        price: 250.0
+        currency: VAULT
+        commands: []
+        slot: 5
+      6:
+        material: EXPERIENCE_BOTTLE
+        name: "&7Bottle o' Enchanting"
+        lore: []
+        price: 1750.0
+        currency: VAULT
+        commands: []
+        slot: 6
 
   food:
     name: "&6&lꜰᴏᴏᴅ"
@@ -172,21 +292,61 @@ categories:
     slot: 14
     items:
       0:
-        material: DIAMOND_SWORD
-        name: "&bDiamond Sword"
+        material: POTATO
+        name: "&7Potato"
         lore: []
-        price: 500.0
+        price: 50.0
         currency: VAULT
         commands: []
         slot: 0
       1:
-        material: BOW
-        name: "&aBow"
+        material: CARROT
+        name: "&7Carrot"
         lore: []
-        price: 150.0
+        price: 50.0
         currency: VAULT
         commands: []
         slot: 1
+      2:
+        material: APPLE
+        name: "&7Apple"
+        lore: []
+        price: 75.0
+        currency: VAULT
+        commands: []
+        slot: 2
+      3:
+        material: COOKED_CHICKEN
+        name: "&7Cooked Chicken"
+        lore: []
+        price: 250.0
+        currency: VAULT
+        commands: []
+        slot: 3
+      4:
+        material: COOKED_BEEF
+        name: "&7Cooked Beef"
+        lore: []
+        price: 450.0
+        currency: VAULT
+        commands: []
+        slot: 4
+      5:
+        material: GOLDEN_CARROT
+        name: "&7Golden Carrot"
+        lore: []
+        price: 750.0
+        currency: VAULT
+        commands: []
+        slot: 5
+      6:
+        material: GOLDEN_APPLE
+        name: "&7Golden Apple"
+        lore: []
+        price: 750.0
+        currency: VAULT
+        commands: []
+        slot: 6
 
   shard_shop:
     name: "&5&lꜱʜᴀʀᴅ ꜱʜᴏᴘ"
@@ -197,25 +357,107 @@ categories:
     items:
       0:
         material: TRIPWIRE_HOOK
-        name: "&6Common Crate Key"
+        name: "&cᴅᴀᴡɴꜰᴀʟʟ ᴄʀᴀᴛᴇ ᴋᴇʏ"
         lore:
-          - "&7Opens a Common Crate."
           - ""
-          - "&ePrice: &f100 Points"
-        price: 100.0
+          - "&7Opens a Dawnfall Crate."
+          - ""
+          - "&7Price: &51000 Shards"
+        price: 1000.0
         currency: PLAYER_POINTS
         commands:
-          - "crates give %player% common 1"
+          - "dc givekey %player% dawnfall 1"
         slot: 0
       1:
-        material: SPAWNER
-        name: "&5Skeleton Spawner"
+        material: TRIPWIRE_HOOK
+        name: "&dꜱᴀᴘᴘʜɪʀᴇ ᴄʀᴀᴛᴇ ᴋᴇʏ"
         lore:
-          - "&7A Skeleton Spawner."
           - ""
-          - "&ePrice: &f500 Points"
-        price: 500.0
+          - "&7Opens a Sapphire Crate."
+          - ""
+          - "&7Price: &51000 Shards"
+        price: 1000.0
         currency: PLAYER_POINTS
         commands:
-          - "ss give spawner %player% skeleton %amount%"
+          - "dc givekey %player% sapphire 1"
         slot: 1
+      2:
+        material: TRIPWIRE_HOOK
+        name: "&bᴡᴀʀᴘᴇᴅ ᴄʀᴀᴛᴇ ᴋᴇʏ"
+        lore:
+          - ""
+          - "&7Opens a Warped Crate."
+          - ""
+          - "&7Price: &51000 Shards"
+        price: 1000.0
+        currency: PLAYER_POINTS
+        commands:
+          - "dc givekey %player% warped 1"
+        slot: 2
+      3:
+        material: SPAWNER
+        name: "&9ᴄᴏᴡ ꜱᴘᴀᴡɴᴇʀ"
+        lore:
+          - ""
+          - "&9Generates:"
+          - "&9- &7XP"
+          - "&9- &7Raw Beef"
+          - "&9- &7Leather"
+          - ""
+          - "&7Price: &51500 Shards"
+        price: 1500.0
+        currency: PLAYER_POINTS
+        commands:
+          - "ss give spawner %player% cow 1"
+        slot: 3
+      4:
+        material: SPAWNER
+        name: "&9ꜱᴘɪᴅᴇʀ ꜱᴘᴀᴡɴᴇʀ"
+        lore:
+          - ""
+          - "&9Generates:"
+          - "&9- &7XP"
+          - "&9- &7Spider Eye"
+          - "&9- &7String"
+          - ""
+          - "&7Price: &51500 Shards"
+        price: 1500.0
+        currency: PLAYER_POINTS
+        commands:
+          - "ss give spawner %player% spider 1"
+        slot: 4
+      5:
+        material: SPAWNER
+        name: "&9ꜱᴘɪᴅᴇʀ ꜱᴘᴀᴡɴᴇʀ"
+        lore:
+          - ""
+          - "&9Generates:"
+          - "&9- &7XP"
+          - "&9- &7Rotten Flesh"
+          - "&9- &7Iron Ingot"
+          - "&9- &7Carrot"
+          - "&9- &7Potato"
+          - ""
+          - "&7Price: &51500 Shards"
+        price: 1500.0
+        currency: PLAYER_POINTS
+        commands:
+          - "ss give spawner %player% zombie 1"
+        slot: 5
+      6:
+        material: SPAWNER
+        name: "&9ꜱᴋᴇʟᴇᴛᴏɴ ꜱᴘᴀᴡɴᴇʀ"
+        lore:
+          - ""
+          - "&9Generates:"
+          - "&9- &7XP"
+          - "&9- &7Arrow"
+          - "&9- &7Bone"
+          - "&9- &7Bow"
+          - ""
+          - "&7Price: &51500 Shards"
+        price: 1500.0
+        currency: PLAYER_POINTS
+        commands:
+          - "ss give spawner %player% skeleton 1"
+        slot: 6
