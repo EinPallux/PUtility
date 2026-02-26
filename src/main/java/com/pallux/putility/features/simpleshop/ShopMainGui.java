@@ -10,9 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ShopMainGui extends AbstractGui {
@@ -46,15 +44,9 @@ public class ShopMainGui extends AbstractGui {
             inventory.setItem(i, fillerItem);
         }
 
-        List<Integer> categorySlots = new ArrayList<>(cfg.getIntegerList("gui.main.category-slots"));
-        if (categorySlots.isEmpty()) {
-            for (int i = 10; i <= 16; i++) categorySlots.add(i);
-        }
-
-        int slotIndex = 0;
         for (ShopCategory category : shopData.getCategories().values()) {
-            if (slotIndex >= categorySlots.size()) break;
-            int slot = categorySlots.get(slotIndex++);
+            int slot = category.getSlot();
+            if (slot < 0 || slot >= 27) continue;
 
             ItemStack catItem = ItemBuilder.buildFromConfig(
                     category.getIcon().name(),

@@ -24,7 +24,7 @@
 
 gui:
   main:
-    title: "&8Shop"
+    title: "&8ꜱʜᴏᴘ"
     filler:
       material: BLACK_STAINED_GLASS_PANE
       name: " "
@@ -39,7 +39,7 @@ gui:
     back-button:
       slot: 22
       material: ARROW
-      name: "&cBack"
+      name: "&c&lʙᴀᴄᴋ"
       lore:
         - "&7Click to return to the main shop."
 
@@ -51,7 +51,7 @@ gui:
     back-button:
       slot: 0
       material: ARROW
-      name: "&cBack"
+      name: "&c&lʙᴀᴄᴋ"
       lore:
         - "&7Click to go back."
     buy-1:
@@ -93,11 +93,83 @@ gui:
 categories:
 
   end:
-    name: "&#cfcc8f&lᴇɴᴅ"
+    name: "&d&lᴇɴᴅ"
     lore:
       - "&7Click to Browse Items"
     icon: END_STONE
-    slot: 10
+    slot: 11
+    items:
+      0:
+        material: DIAMOND_SWORD
+        name: "&bDiamond Sword"
+        lore: []
+        price: 500.0
+        currency: VAULT
+        commands: []
+        slot: 0
+      1:
+        material: BOW
+        name: "&aBow"
+        lore: []
+        price: 150.0
+        currency: VAULT
+        commands: []
+        slot: 1
+
+  nether:
+    name: "&c&lɴᴇᴛʜᴇʀ"
+    lore:
+      - "&7Click to Browse Items"
+    icon: NETHERRACK
+    slot: 12
+    items:
+      0:
+        material: DIAMOND_SWORD
+        name: "&bDiamond Sword"
+        lore: []
+        price: 500.0
+        currency: VAULT
+        commands: []
+        slot: 0
+      1:
+        material: BOW
+        name: "&aBow"
+        lore: []
+        price: 150.0
+        currency: VAULT
+        commands: []
+        slot: 1
+
+  utility:
+    name: "&f&lᴜᴛɪʟɪᴛʏ"
+    lore:
+      - "&7Click to Browse Items"
+    icon: TOTEM_OF_UNDYING
+    slot: 13
+    items:
+      0:
+        material: DIAMOND_SWORD
+        name: "&bDiamond Sword"
+        lore: []
+        price: 500.0
+        currency: VAULT
+        commands: []
+        slot: 0
+      1:
+        material: BOW
+        name: "&aBow"
+        lore: []
+        price: 150.0
+        currency: VAULT
+        commands: []
+        slot: 1
+
+  food:
+    name: "&6&lꜰᴏᴏᴅ"
+    lore:
+      - "&7Click to Browse Items"
+    icon: COOKED_BEEF
+    slot: 14
     items:
       0:
         material: DIAMOND_SWORD
@@ -121,7 +193,7 @@ categories:
     lore:
       - "&7Click to Browse Items"
     icon: AMETHYST_SHARD
-    slot: 16
+    slot: 15
     items:
       0:
         material: TRIPWIRE_HOOK
