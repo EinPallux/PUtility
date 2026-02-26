@@ -17,6 +17,10 @@ commands:
     usage: /putility <reload>
     permission: pu.admin
     aliases: [ pu ]
+  fly:
+    description: Toggles flight on/off in allowed worlds.
+    usage: /fly
+    permission: pu.fly
 
 permissions:
   pu.shop:
@@ -27,4 +31,10 @@ permissions:
     default: op
   pu.shards:
     description: Grants periodic shard rewards via PremiumShards feature.
+    default: false
+  pu.doublejump:
+    description: Allows double jumping in configured worlds.
+    default: false
+  pu.fly:
+    description: Allows flying in configured lobby worlds.
     default: false

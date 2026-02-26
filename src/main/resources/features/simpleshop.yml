@@ -87,13 +87,6 @@ gui:
         - ""
         - "&eClick to purchase!"
 
-messages:
-  shop-disabled: "&cThe shop is currently disabled."
-  purchase-success: "&aYou purchased &f{amount}x {item} &afor &f{price}&a!"
-  purchase-failed-funds: "&cYou don't have enough money! You need &f{price}&c."
-  purchase-failed-funds-points: "&cYou don't have enough Points! You need &f{price} Points&c."
-  purchase-failed-inventory: "&cYour inventory is full!"
-
 # ============================================================
 #  SHOP CATEGORIES & ITEMS
 # ============================================================

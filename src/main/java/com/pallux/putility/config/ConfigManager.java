@@ -19,8 +19,14 @@ public class ConfigManager {
     private final Map<String, FileConfiguration> configs = new HashMap<>();
     private final Map<String, File> configFiles = new HashMap<>();
 
-    private static final String[] CONFIG_NAMES = {
-            "config", "messages", "simpleshop", "premiumshards"
+    // Root-level configs
+    private static final String[] ROOT_CONFIGS = {
+            "config", "messages"
+    };
+
+    // Feature configs — stored in /features/ subfolder
+    private static final String[] FEATURE_CONFIGS = {
+            "simpleshop", "premiumshards", "doublejump", "lobbyfly"
     };
 
     public ConfigManager(PUtility plugin) {
@@ -28,22 +34,30 @@ public class ConfigManager {
     }
 
     public void loadAll() {
-        for (String name : CONFIG_NAMES) {
-            loadConfig(name);
+        for (String name : ROOT_CONFIGS) {
+            loadConfig(name, false);
+        }
+        for (String name : FEATURE_CONFIGS) {
+            loadConfig(name, true);
         }
     }
 
-    private void loadConfig(String name) {
+    private void loadConfig(String name, boolean inFeaturesFolder) {
         String fileName = name.equals("config") ? "config.yml" : name + ".yml";
-        File file = new File(plugin.getDataFolder(), fileName);
+        String resourcePath = inFeaturesFolder ? "features/" + fileName : fileName;
+
+        File file = inFeaturesFolder
+                ? new File(plugin.getDataFolder(), "features" + File.separator + fileName)
+                : new File(plugin.getDataFolder(), fileName);
 
         if (!file.exists()) {
-            plugin.saveResource(fileName, false);
+            file.getParentFile().mkdirs();
+            plugin.saveResource(resourcePath, false);
         }
 
         FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
-        InputStream defStream = plugin.getResource(fileName);
+        InputStream defStream = plugin.getResource(resourcePath);
         if (defStream != null) {
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(
                     new InputStreamReader(defStream, StandardCharsets.UTF_8));

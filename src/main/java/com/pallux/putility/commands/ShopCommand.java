@@ -28,7 +28,7 @@ public class ShopCommand implements CommandExecutor, TabCompleter {
         if (!(sender instanceof Player player)) {
             sender.sendMessage(MessageUtils.parse(
                     plugin.getConfigManager().get("messages").getString("prefix", "&7&lUTILITY &7➠ ")
-                    + plugin.getConfigManager().get("messages").getString("player-only", "&cThis command can only be used by players.")));
+                            + plugin.getConfigManager().get("messages").getString("player-only", "&cThis command can only be used by players.")));
             return true;
         }
 
@@ -36,14 +36,14 @@ public class ShopCommand implements CommandExecutor, TabCompleter {
         if (feature == null || !feature.isEnabled()) {
             player.sendMessage(MessageUtils.parse(
                     plugin.getConfigManager().get("messages").getString("prefix", "&7&lUTILITY &7➠ ")
-                    + plugin.getConfigManager().get("simpleshop").getString("messages.shop-disabled", "&cThe shop is currently disabled."), player));
+                            + plugin.getConfigManager().get("messages").getString("shop-disabled", "&cThe shop is currently disabled."), player));
             return true;
         }
 
         if (!player.hasPermission("pu.shop")) {
             player.sendMessage(MessageUtils.parse(
                     plugin.getConfigManager().get("messages").getString("prefix", "&7&lUTILITY &7➠ ")
-                    + plugin.getConfigManager().get("messages").getString("no-permission", "&cYou do not have permission to use this command."), player));
+                            + plugin.getConfigManager().get("messages").getString("no-permission", "&cYou do not have permission to use this command."), player));
             return true;
         }
 

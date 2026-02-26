@@ -9,9 +9,8 @@
 # Made by Pallux @ BBB - For Support, visit my Discord:
 # https://discord.com/invite/FwRtcAdsTC ^-^
 
-# Here you can toggle individual Features On and Off.
-features:
-  simpleshop: true
-  premiumshards: true
-  doublejump: true
-  lobbyfly: true
+# Worlds in which LobbyFly is active.
+# Players must also have the pu.fly permission.
+worlds:
+  - world
+  - lobby

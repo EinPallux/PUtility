@@ -10,7 +10,7 @@
 # https://discord.com/invite/FwRtcAdsTC ^-^
 
 # How often (in seconds) the command is executed for eligible players.
-interval-seconds: 60
+interval-seconds: 120
 
 # The permission a player must have to receive the reward.
 permission: pu.shards

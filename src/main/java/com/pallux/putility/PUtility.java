@@ -1,10 +1,13 @@
 package com.pallux.putility;
 
+import com.pallux.putility.commands.FlyCommand;
 import com.pallux.putility.commands.PUtilityCommand;
 import com.pallux.putility.commands.ShopCommand;
 import com.pallux.putility.config.ConfigManager;
 import com.pallux.putility.economy.EconomyHandler;
 import com.pallux.putility.economy.PlayerPointsHandler;
+import com.pallux.putility.features.doublejump.DoubleJumpFeature;
+import com.pallux.putility.features.lobbyfly.LobbyFlyFeature;
 import com.pallux.putility.features.premiumshards.PremiumShardsFeature;
 import com.pallux.putility.features.simpleshop.ShopFeature;
 import com.pallux.putility.gui.GuiListener;
@@ -22,6 +25,8 @@ public final class PUtility extends JavaPlugin {
     private PlayerPointsHandler playerPointsHandler;
     private ShopFeature shopFeature;
     private PremiumShardsFeature premiumShardsFeature;
+    private DoubleJumpFeature doubleJumpFeature;
+    private LobbyFlyFeature lobbyFlyFeature;
 
     @Override
     public void onEnable() {
@@ -54,6 +59,8 @@ public final class PUtility extends JavaPlugin {
     public void onDisable() {
         if (shopFeature != null) shopFeature.disable();
         if (premiumShardsFeature != null) premiumShardsFeature.disable();
+        if (doubleJumpFeature != null) doubleJumpFeature.disable();
+        if (lobbyFlyFeature != null) lobbyFlyFeature.disable();
         getLogger().info("PUtility disabled.");
     }
 
@@ -67,11 +74,22 @@ public final class PUtility extends JavaPlugin {
         if (getConfig().getBoolean("features.premiumshards", true)) {
             premiumShardsFeature.enable();
         }
+
+        doubleJumpFeature = new DoubleJumpFeature(this);
+        if (getConfig().getBoolean("features.doublejump", true)) {
+            doubleJumpFeature.enable();
+        }
+
+        lobbyFlyFeature = new LobbyFlyFeature(this);
+        if (getConfig().getBoolean("features.lobbyfly", true)) {
+            lobbyFlyFeature.enable();
+        }
     }
 
     private void registerCommands() {
         registerCmd("shop", new ShopCommand(this));
         registerCmd("putility", new PUtilityCommand(this));
+        registerCmd("fly", new FlyCommand(this));
     }
 
     private void registerCmd(String name, org.bukkit.command.CommandExecutor executor) {
@@ -90,6 +108,8 @@ public final class PUtility extends JavaPlugin {
         configManager.loadAll();
         if (shopFeature != null) shopFeature.reload();
         if (premiumShardsFeature != null) premiumShardsFeature.reload();
+        if (doubleJumpFeature != null) doubleJumpFeature.reload();
+        if (lobbyFlyFeature != null) lobbyFlyFeature.reload();
     }
 
     public static PUtility getInstance() { return instance; }
@@ -98,4 +118,6 @@ public final class PUtility extends JavaPlugin {
     public PlayerPointsHandler getPlayerPointsHandler() { return playerPointsHandler; }
     public ShopFeature getShopFeature() { return shopFeature; }
     public PremiumShardsFeature getPremiumShardsFeature() { return premiumShardsFeature; }
+    public DoubleJumpFeature getDoubleJumpFeature() { return doubleJumpFeature; }
+    public LobbyFlyFeature getLobbyFlyFeature() { return lobbyFlyFeature; }
 }

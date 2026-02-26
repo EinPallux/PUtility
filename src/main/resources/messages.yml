@@ -17,3 +17,15 @@ messages:
   player-only: "&cThis command can only be used by players."
   reload-success: "&aConfiguration reloaded successfully."
   feature-disabled: "&cThis feature is currently disabled."
+
+  # LobbyFly Feature Messages (from features/lobbyfly.yml)
+  fly-enabled: "&aFlight enabled."
+  fly-disabled: "&cFlight disabled."
+  fly-not-in-world: "&cYou cannot use fly in this world."
+
+  # SimpleShop Feature Messages (from features/simpleshop.yml)
+  shop-disabled: "&cThe shop is currently disabled."
+  purchase-success: "&aYou purchased &f{amount}x {item} &afor &f{price}&a!"
+  purchase-failed-funds: "&cYou don't have enough money! You need &f{price}&c."
+  purchase-failed-funds-points: "&cYou don't have enough Points! You need &f{price} Points&c."
+  purchase-failed-inventory: "&cYour inventory is full!"

@@ -11,7 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 import java.util.Map;
@@ -78,7 +77,6 @@ public class ShopBuyGui extends AbstractGui {
                             .replace("{currency}", currencySymbol))
                     .toList();
 
-            // Build as LIME_STAINED_GLASS_PANE with the configured name & lore
             ItemStack buyItem = ItemBuilder.buildFromConfig(
                     "LIME_STAINED_GLASS_PANE", name, processedLore, player, Map.of()
             );
@@ -112,8 +110,8 @@ public class ShopBuyGui extends AbstractGui {
     }
 
     private void processPurchase(Player buyer, int amount) {
-        FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
-        String prefix = plugin.getConfigManager().get("messages").getString("prefix", "&7&lUTILITY &7➠ ");
+        FileConfiguration msgs = plugin.getConfigManager().get("messages");
+        String prefix = msgs.getString("prefix", "&7&lUTILITY &7➠ ");
 
         double totalPrice = shopItem.getPriceFor(amount);
         String priceStr = formatPrice(totalPrice);
@@ -126,7 +124,7 @@ public class ShopBuyGui extends AbstractGui {
             }
             int pointsCost = (int) Math.ceil(totalPrice);
             if (!pp.has(buyer, pointsCost)) {
-                String msg = cfg.getString("messages.purchase-failed-funds-points",
+                String msg = msgs.getString("purchase-failed-funds-points",
                                 "&cYou don't have enough Points! You need &f{price} Points&c.")
                         .replace("{price}", String.valueOf(pointsCost));
                 buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
@@ -136,7 +134,7 @@ public class ShopBuyGui extends AbstractGui {
                 ItemStack toGive = new ItemStack(shopItem.getMaterial(), amount);
                 if (!hasSpace(buyer, toGive)) {
                     buyer.sendMessage(MessageUtils.parse(prefix +
-                            cfg.getString("messages.purchase-failed-inventory", "&cYour inventory is full!"), buyer));
+                            msgs.getString("purchase-failed-inventory", "&cYour inventory is full!"), buyer));
                     return;
                 }
                 buyer.getInventory().addItem(toGive);
@@ -149,7 +147,7 @@ public class ShopBuyGui extends AbstractGui {
                 return;
             }
             if (!eco.has(buyer, totalPrice)) {
-                String msg = cfg.getString("messages.purchase-failed-funds",
+                String msg = msgs.getString("purchase-failed-funds",
                                 "&cYou don't have enough money! You need &f{price}&c.")
                         .replace("{price}", priceStr);
                 buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
@@ -159,7 +157,7 @@ public class ShopBuyGui extends AbstractGui {
                 ItemStack toGive = new ItemStack(shopItem.getMaterial(), amount);
                 if (!hasSpace(buyer, toGive)) {
                     buyer.sendMessage(MessageUtils.parse(prefix +
-                            cfg.getString("messages.purchase-failed-inventory", "&cYour inventory is full!"), buyer));
+                            msgs.getString("purchase-failed-inventory", "&cYour inventory is full!"), buyer));
                     return;
                 }
                 buyer.getInventory().addItem(toGive);
@@ -176,7 +174,7 @@ public class ShopBuyGui extends AbstractGui {
             }
         }
 
-        String msg = cfg.getString("messages.purchase-success",
+        String msg = msgs.getString("purchase-success",
                         "&aYou purchased &f{amount}x {item} &afor &f{price}&a!")
                 .replace("{amount}", String.valueOf(amount))
                 .replace("{item}", shopItem.getName())

@@ -1,0 +1,31 @@
+#   ___  __  ____  _ ___ __
+#  / _ \/ / / / /_(_) (_) /___ __
+# / ___/ /_/ / __/ / / / __/ // /
+#/_/   \____/\__/_/_/_/\__/\_, /
+#  _________  _  _________/___/_
+# / ___/ __ \/ |/ / __/  _/ ___/
+#/ /__/ /_/ /    / _/_/ // (_ /
+#\___/\____/_/|_/_/ /___/\___/
+# Made by Pallux @ BBB - For Support, visit my Discord:
+# https://discord.com/invite/FwRtcAdsTC ^-^
+
+# Worlds in which DoubleJump is active.
+# Players must also have the pu.doublejump permission.
+worlds:
+  - world
+  - lobby
+
+# Jump velocity settings.
+velocity:
+  # Upward boost when double-jumping.
+  vertical: 1.0
+  # Forward boost when double-jumping (0.0 = no horizontal boost).
+  horizontal: 0.5
+
+# Particle effect on double jump (leave empty to disable).
+# Must be a valid Bukkit Particle name, e.g. CLOUD, CRIT, FIREWORK.
+effect: "CLOUD"
+
+# Cooldown in seconds before the double jump charge is restored after landing.
+# Set to 0 to disable the cooldown entirely.
+cooldown-seconds: 1
