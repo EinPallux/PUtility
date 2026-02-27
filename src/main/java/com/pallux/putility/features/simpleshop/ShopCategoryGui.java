@@ -1,6 +1,8 @@
 package com.pallux.putility.features.simpleshop;
 
 import com.pallux.putility.PUtility;
+import com.pallux.putility.economy.EconomyHandler;
+import com.pallux.putility.economy.PlayerPointsHandler;
 import com.pallux.putility.gui.AbstractGui;
 import com.pallux.putility.utils.ItemBuilder;
 import com.pallux.putility.utils.MessageUtils;
@@ -10,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +22,9 @@ public class ShopCategoryGui extends AbstractGui {
     private final Player player;
     private final ShopData shopData;
     private final ShopCategory category;
+
+    // Maps inventory slot → ShopItem for instant-buy categories
+    private final Map<Integer, ShopItem> slotToItemMap = new HashMap<>();
 
     private static final int[] ITEM_SLOTS = {10, 11, 12, 13, 14, 15, 16};
 
@@ -36,6 +42,8 @@ public class ShopCategoryGui extends AbstractGui {
 
     @Override
     protected void build() {
+        slotToItemMap.clear();
+
         FileConfiguration cfg = plugin.getConfigManager().get("simpleshop");
 
         Material filler = parseMaterial(cfg.getString("gui.category.filler.material", "BLACK_STAINED_GLASS_PANE"));
@@ -53,14 +61,14 @@ public class ShopCategoryGui extends AbstractGui {
         int slotIdx = 0;
         for (ShopItem item : category.getItems().values()) {
             if (slotIdx >= ITEM_SLOTS.length) break;
-            int targetSlot = ITEM_SLOTS[slotIdx];
 
             // Skip the back button slot if it overlaps
             while (slotIdx < ITEM_SLOTS.length && ITEM_SLOTS[slotIdx] == backSlot) {
                 slotIdx++;
             }
             if (slotIdx >= ITEM_SLOTS.length) break;
-            targetSlot = ITEM_SLOTS[slotIdx];
+
+            int targetSlot = ITEM_SLOTS[slotIdx];
 
             ItemStack display = ItemBuilder.buildFromConfig(
                     item.getMaterial().name(),
@@ -70,6 +78,7 @@ public class ShopCategoryGui extends AbstractGui {
                     Map.of()
             );
             inventory.setItem(targetSlot, display);
+            slotToItemMap.put(targetSlot, item);
             slotIdx++;
         }
     }
@@ -91,24 +100,75 @@ public class ShopCategoryGui extends AbstractGui {
         ItemStack clicked = event.getCurrentItem();
         if (clicked == null || clicked.getType() == Material.AIR || clicked.getType() == filler) return;
 
-        // Find which index in ITEM_SLOTS was clicked
-        int itemIndex = -1;
-        int validIdx = 0;
-        for (int i = 0; i < ITEM_SLOTS.length; i++) {
-            if (ITEM_SLOTS[i] == backSlot) continue;
-            if (ITEM_SLOTS[i] == clickedSlot) {
-                itemIndex = validIdx;
-                break;
+        ShopItem item = slotToItemMap.get(clickedSlot);
+        if (item == null) return;
+
+        if (category.isInstantBuy()) {
+            processInstantPurchase(clicker, item);
+        } else {
+            new ShopBuyGui(plugin, clicker, shopData, category, item).open(clicker);
+        }
+    }
+
+    private void processInstantPurchase(Player buyer, ShopItem shopItem) {
+        FileConfiguration msgs = plugin.getConfigManager().get("messages");
+        String prefix = msgs.getString("prefix", "&7&lUTILITY &7➠ ");
+        int amount = 1;
+        double totalPrice = shopItem.getPriceFor(amount);
+
+        if (shopItem.getCurrencyType() == ShopItem.CurrencyType.PLAYER_POINTS) {
+            PlayerPointsHandler pp = plugin.getPlayerPointsHandler();
+            if (!pp.isAvailable()) {
+                buyer.sendMessage(MessageUtils.parse(prefix + "&cPlayerPoints is not installed or enabled.", buyer));
+                return;
             }
-            validIdx++;
+            int pointsCost = (int) Math.ceil(totalPrice);
+            if (!pp.has(buyer, pointsCost)) {
+                String msg = msgs.getString("purchase-failed-funds-points",
+                                "&cYou don't have enough Points! You need &f{price} Points&c.")
+                        .replace("{price}", String.valueOf(pointsCost));
+                buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
+                return;
+            }
+            pp.withdraw(buyer, pointsCost);
+        } else {
+            EconomyHandler eco = plugin.getEconomyHandler();
+            if (!eco.isAvailable()) {
+                buyer.sendMessage(MessageUtils.parse(prefix + "&cEconomy is not available.", buyer));
+                return;
+            }
+            if (!eco.has(buyer, totalPrice)) {
+                String msg = msgs.getString("purchase-failed-funds",
+                                "&cYou don't have enough money! You need &f{price}&c.")
+                        .replace("{price}", eco.format(totalPrice));
+                buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
+                return;
+            }
+            eco.withdraw(buyer, totalPrice);
         }
 
-        if (itemIndex < 0) return;
+        if (shopItem.hasCommands()) {
+            for (String cmd : shopItem.getCommands()) {
+                String parsed = cmd
+                        .replace("%player%", buyer.getName())
+                        .replace("%amount%", String.valueOf(amount));
+                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), parsed);
+            }
+        }
 
-        ShopItem[] items = category.getItems().values().toArray(new ShopItem[0]);
-        if (itemIndex >= items.length) return;
+        String priceStr = shopItem.getCurrencyType() == ShopItem.CurrencyType.PLAYER_POINTS
+                ? (int) Math.ceil(totalPrice) + " Points"
+                : plugin.getEconomyHandler().isAvailable()
+                ? plugin.getEconomyHandler().format(totalPrice)
+                : String.format("$%.2f", totalPrice);
 
-        new ShopBuyGui(plugin, clicker, shopData, category, items[itemIndex]).open(clicker);
+        String msg = msgs.getString("purchase-success",
+                        "&aYou purchased &f{amount}x {item} &afor &f{price}&a!")
+                .replace("{amount}", String.valueOf(amount))
+                .replace("{item}", shopItem.getName())
+                .replace("{price}", priceStr);
+        buyer.sendMessage(MessageUtils.parse(prefix + msg, buyer));
+        buyer.closeInventory();
     }
 
     private Material parseMaterial(String name) {

@@ -5,7 +5,6 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,8 +32,9 @@ public class ShopData {
             List<String> lore = cat.getStringList("lore");
             Material icon = parseMaterial(cat.getString("icon", "CHEST"));
             int slot = cat.getInt("slot", 10);
+            boolean instantBuy = cat.getBoolean("instant-buy", false);
 
-            ShopCategory category = new ShopCategory(catId, name, lore, icon, slot);
+            ShopCategory category = new ShopCategory(catId, name, lore, icon, slot, instantBuy);
 
             ConfigurationSection itemsSection = cat.getConfigurationSection("items");
             if (itemsSection != null) {
@@ -48,7 +48,6 @@ public class ShopData {
                     double price = itemCfg.getDouble("price", 10.0);
                     int itemSlot = itemCfg.getInt("slot", 0);
 
-                    // Currency type
                     String currencyStr = itemCfg.getString("currency", "VAULT").toUpperCase();
                     ShopItem.CurrencyType currency;
                     try {
@@ -57,7 +56,6 @@ public class ShopData {
                         currency = ShopItem.CurrencyType.VAULT;
                     }
 
-                    // Console commands
                     List<String> commands = itemCfg.getStringList("commands");
 
                     ShopItem shopItem = new ShopItem(mat, itemName, itemLore, price, currency, commands, itemSlot);

@@ -14,14 +14,16 @@ public class ShopCategory {
     private List<String> lore;
     private Material icon;
     private int slot;
+    private boolean instantBuy;
     private Map<Integer, ShopItem> items;
 
-    public ShopCategory(String id, String name, List<String> lore, Material icon, int slot) {
+    public ShopCategory(String id, String name, List<String> lore, Material icon, int slot, boolean instantBuy) {
         this.id = id;
         this.name = name;
         this.lore = lore != null ? lore : new ArrayList<>();
         this.icon = icon;
         this.slot = slot;
+        this.instantBuy = instantBuy;
         this.items = new LinkedHashMap<>();
     }
 
@@ -34,6 +36,8 @@ public class ShopCategory {
     public void setIcon(Material icon) { this.icon = icon; }
     public int getSlot() { return slot; }
     public void setSlot(int slot) { this.slot = slot; }
+    public boolean isInstantBuy() { return instantBuy; }
+    public void setInstantBuy(boolean instantBuy) { this.instantBuy = instantBuy; }
     public Map<Integer, ShopItem> getItems() { return items; }
 
     public void addItem(ShopItem item) {

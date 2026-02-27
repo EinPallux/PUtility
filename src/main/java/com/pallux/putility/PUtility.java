@@ -6,6 +6,7 @@ import com.pallux.putility.commands.ShopCommand;
 import com.pallux.putility.config.ConfigManager;
 import com.pallux.putility.economy.EconomyHandler;
 import com.pallux.putility.economy.PlayerPointsHandler;
+import com.pallux.putility.features.blockedcommands.BlockedCommandsFeature;
 import com.pallux.putility.features.doublejump.DoubleJumpFeature;
 import com.pallux.putility.features.lobbyfly.LobbyFlyFeature;
 import com.pallux.putility.features.premiumshards.PremiumShardsFeature;
@@ -27,6 +28,7 @@ public final class PUtility extends JavaPlugin {
     private PremiumShardsFeature premiumShardsFeature;
     private DoubleJumpFeature doubleJumpFeature;
     private LobbyFlyFeature lobbyFlyFeature;
+    private BlockedCommandsFeature blockedCommandsFeature;
 
     @Override
     public void onEnable() {
@@ -61,6 +63,7 @@ public final class PUtility extends JavaPlugin {
         if (premiumShardsFeature != null) premiumShardsFeature.disable();
         if (doubleJumpFeature != null) doubleJumpFeature.disable();
         if (lobbyFlyFeature != null) lobbyFlyFeature.disable();
+        if (blockedCommandsFeature != null) blockedCommandsFeature.disable();
         getLogger().info("PUtility disabled.");
     }
 
@@ -83,6 +86,11 @@ public final class PUtility extends JavaPlugin {
         lobbyFlyFeature = new LobbyFlyFeature(this);
         if (getConfig().getBoolean("features.lobbyfly", true)) {
             lobbyFlyFeature.enable();
+        }
+
+        blockedCommandsFeature = new BlockedCommandsFeature(this);
+        if (getConfig().getBoolean("features.blockedcommands", true)) {
+            blockedCommandsFeature.enable();
         }
     }
 
@@ -110,6 +118,7 @@ public final class PUtility extends JavaPlugin {
         if (premiumShardsFeature != null) premiumShardsFeature.reload();
         if (doubleJumpFeature != null) doubleJumpFeature.reload();
         if (lobbyFlyFeature != null) lobbyFlyFeature.reload();
+        if (blockedCommandsFeature != null) blockedCommandsFeature.reload();
     }
 
     public static PUtility getInstance() { return instance; }
@@ -120,4 +129,5 @@ public final class PUtility extends JavaPlugin {
     public PremiumShardsFeature getPremiumShardsFeature() { return premiumShardsFeature; }
     public DoubleJumpFeature getDoubleJumpFeature() { return doubleJumpFeature; }
     public LobbyFlyFeature getLobbyFlyFeature() { return lobbyFlyFeature; }
+    public BlockedCommandsFeature getBlockedCommandsFeature() { return blockedCommandsFeature; }
 }

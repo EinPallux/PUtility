@@ -26,7 +26,7 @@ public class ConfigManager {
 
     // Feature configs — stored in /features/ subfolder
     private static final String[] FEATURE_CONFIGS = {
-            "simpleshop", "premiumshards", "doublejump", "lobbyfly"
+            "simpleshop", "premiumshards", "doublejump", "lobbyfly", "blocked-commands"
     };
 
     public ConfigManager(PUtility plugin) {

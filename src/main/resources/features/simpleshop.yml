@@ -21,6 +21,11 @@
 # Use %player% for the buyer's name, %amount% for quantity purchased.
 # Set material to AIR if you want a command-only item (no physical item given).
 # Commands are optional - leave the list empty if not needed.
+#
+# --- INSTANT BUY ---
+# Set instant-buy: true on a category to skip the amount selection screen.
+# The item is purchased immediately for quantity 1 when clicked.
+# Only the configured commands will be executed — no physical item is given by the plugin.
 
 gui:
   main:
@@ -28,8 +33,6 @@ gui:
     filler:
       material: BLACK_STAINED_GLASS_PANE
       name: " "
-    # Slots for category icons inside the 27-slot main GUI (0-indexed)
-    category-slots: [10, 11, 12, 13, 14, 15, 16]
 
   category:
     title: "&8{category_name}"
@@ -98,6 +101,7 @@ categories:
       - "&7Click to Browse Items"
     icon: END_STONE
     slot: 11
+    instant-buy: false
     items:
       0:
         material: ENDER_CHEST
@@ -162,6 +166,7 @@ categories:
       - "&7Click to Browse Items"
     icon: NETHERRACK
     slot: 12
+    instant-buy: false
     items:
       0:
         material: BLAZE_ROD
@@ -226,6 +231,7 @@ categories:
       - "&7Click to Browse Items"
     icon: TOTEM_OF_UNDYING
     slot: 13
+    instant-buy: false
     items:
       0:
         material: OBSIDIAN
@@ -290,6 +296,7 @@ categories:
       - "&7Click to Browse Items"
     icon: COOKED_BEEF
     slot: 14
+    instant-buy: false
     items:
       0:
         material: POTATO
@@ -354,6 +361,7 @@ categories:
       - "&7Click to Browse Items"
     icon: AMETHYST_SHARD
     slot: 15
+    instant-buy: true
     items:
       0:
         material: TRIPWIRE_HOOK
@@ -428,7 +436,7 @@ categories:
         slot: 4
       5:
         material: SPAWNER
-        name: "&9ꜱᴘɪᴅᴇʀ ꜱᴘᴀᴡɴᴇʀ"
+        name: "&9ᴢᴏᴍʙɪᴇ ꜱᴘᴀᴡɴᴇʀ"
         lore:
           - ""
           - "&9Generates:"
