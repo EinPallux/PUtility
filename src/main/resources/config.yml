@@ -16,3 +16,4 @@ features:
   doublejump: true
   lobbyfly: true
   blockedcommands: true
+  aliascommands: true

@@ -6,6 +6,7 @@ import com.pallux.putility.commands.ShopCommand;
 import com.pallux.putility.config.ConfigManager;
 import com.pallux.putility.economy.EconomyHandler;
 import com.pallux.putility.economy.PlayerPointsHandler;
+import com.pallux.putility.features.aliascommands.AliasCommandsFeature;
 import com.pallux.putility.features.blockedcommands.BlockedCommandsFeature;
 import com.pallux.putility.features.doublejump.DoubleJumpFeature;
 import com.pallux.putility.features.lobbyfly.LobbyFlyFeature;
@@ -29,6 +30,7 @@ public final class PUtility extends JavaPlugin {
     private DoubleJumpFeature doubleJumpFeature;
     private LobbyFlyFeature lobbyFlyFeature;
     private BlockedCommandsFeature blockedCommandsFeature;
+    private AliasCommandsFeature aliasCommandsFeature;
 
     @Override
     public void onEnable() {
@@ -64,6 +66,7 @@ public final class PUtility extends JavaPlugin {
         if (doubleJumpFeature != null) doubleJumpFeature.disable();
         if (lobbyFlyFeature != null) lobbyFlyFeature.disable();
         if (blockedCommandsFeature != null) blockedCommandsFeature.disable();
+        if (aliasCommandsFeature != null) aliasCommandsFeature.disable();
         getLogger().info("PUtility disabled.");
     }
 
@@ -92,6 +95,11 @@ public final class PUtility extends JavaPlugin {
         if (getConfig().getBoolean("features.blockedcommands", true)) {
             blockedCommandsFeature.enable();
         }
+
+        aliasCommandsFeature = new AliasCommandsFeature(this);
+        if (getConfig().getBoolean("features.aliascommands", true)) {
+            aliasCommandsFeature.enable();
+        }
     }
 
     private void registerCommands() {
@@ -119,6 +127,7 @@ public final class PUtility extends JavaPlugin {
         if (doubleJumpFeature != null) doubleJumpFeature.reload();
         if (lobbyFlyFeature != null) lobbyFlyFeature.reload();
         if (blockedCommandsFeature != null) blockedCommandsFeature.reload();
+        if (aliasCommandsFeature != null) aliasCommandsFeature.reload();
     }
 
     public static PUtility getInstance() { return instance; }
@@ -130,4 +139,5 @@ public final class PUtility extends JavaPlugin {
     public DoubleJumpFeature getDoubleJumpFeature() { return doubleJumpFeature; }
     public LobbyFlyFeature getLobbyFlyFeature() { return lobbyFlyFeature; }
     public BlockedCommandsFeature getBlockedCommandsFeature() { return blockedCommandsFeature; }
+    public AliasCommandsFeature getAliasCommandsFeature() { return aliasCommandsFeature; }
 }

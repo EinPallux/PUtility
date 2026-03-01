@@ -1,0 +1,30 @@
+#   ___  __  ____  _ ___ __
+#  / _ \/ / / / /_(_) (_) /___ __
+# / ___/ /_/ / __/ / / / __/ // /
+#/_/   \____/\__/_/_/_/\__/\_, /
+#  _________  _  _________/___/_
+# / ___/ __ \/ |/ / __/  _/ ___/
+#/ /__/ /_/ /    / _/_/ // (_ /
+#\___/\____/_/|_/_/ /___/\___/
+# Made by Pallux @ BBB - For Support, visit my Discord:
+# https://discord.com/invite/FwRtcAdsTC ^-^
+
+# AliasCommands Feature
+# Define as many alias commands as you want below.
+# Each alias will be registered as a real command (tab-complete included).
+#
+# Format:
+#   aliases:
+#     <alias>: "<command to execute>"
+#
+# The <alias> is the command players type (without the slash).
+# The <command to execute> is what gets run as the player (without the slash).
+# Use %player% as a placeholder for the player's name if needed.
+#
+# Example:
+#   afk: "warp afk"
+#   spawn: "warp spawn"
+#   hub: "server hub"
+
+aliases:
+  afk: "warp afk"
